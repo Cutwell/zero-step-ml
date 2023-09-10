@@ -1,4 +1,4 @@
-from ..src.main import analyse_ml_metrics
+from zero_step_ml.src.main import analyse_ml_metrics
 
 
 TEST_TASK = "classification"
