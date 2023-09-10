@@ -24,7 +24,7 @@ make test       # Run unit tests to check installation
 ## Usage
 
 1. Obtain your dataset (supported file types: CSV) (supported ML tasks: classification, regression).
-2. Run `poetry run python zero_step_ml/src/main.py --target="my_dataset.csv"`
+2. Run `poetry run zero_step_ml --target="my_dataset.csv"`
 
 ## License
 
