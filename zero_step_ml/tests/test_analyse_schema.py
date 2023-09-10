@@ -1,4 +1,4 @@
-from ..src.main import analyse_schema
+from zero_step_ml.src.main import analyse_schema
 
 
 TEST_DATASET_NAME = "seeds_dataset.csv"
