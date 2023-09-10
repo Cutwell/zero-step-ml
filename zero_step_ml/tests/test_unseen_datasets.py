@@ -1,4 +1,4 @@
-from ..src.main import main
+from zero_step_ml.src.main import main
 
 def test_auto_insurance_sweden():
     print("\ntest_auto_insurance_sweden: ")
