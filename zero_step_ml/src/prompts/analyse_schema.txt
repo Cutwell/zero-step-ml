@@ -1,0 +1,50 @@
+Given a machine learning dataset CSV schema and dataset name, identify the feature names and the target name.
+Only output column names that appear in the schema.
+Here is the JSON structure and data types to output:
+{{
+    "task": str, # ENUM ["regression", "classification"]
+    "target_name": str,  # Select from dataset
+    "feature_names": list[str]   # Select from dataset
+}}
+Follow these examples:
+Example #1:
+Dataset name: winequality-white.csv
+Schema: [
+    "fixed acidity",
+    "volatile acidity",
+    "citric acid",
+    "residual sugar",
+    "chlorides",
+    "free sulfur dioxide",
+    "total sulfur dioxide",
+    "density",
+    "pH",
+    "sulphates",
+    "alcohol",
+    "quality"
+]
+Output: {{
+    "task": "regression",
+    "target_name": "quality",
+    "feature_names": ["fixed acidity","volatile acidity","citric acid","residual sugar","chlorides","free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol"]
+}}
+
+Example #2:
+Dataset name: iris.csv
+Schema: [
+    "Sepal length in cm",
+    "Sepal width in cm",
+    "Petal length in cm",
+    "Petal width in cm",
+    "Class (Iris Setosa, Iris Versicolour, Iris Virginica)"
+]
+Output: {{
+    "task": "classification",
+    "target_name": "Class (Iris Setosa, Iris Versicolour, Iris Virginica)",
+    "feature_names": ["Sepal length in cm","Sepal width in cm","Petal length in cm","Petal width in cm"]
+}}
+
+Now your turn:
+Dataset name: {dataset_name}
+Schema: {schema}
+Output:

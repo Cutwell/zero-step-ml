@@ -1,0 +1,4 @@
+Given metrics from testing a machine learning model, write a details summary of these metrics to help a researcher determine the performance of the model.
+Model task: {task}
+Metrics: {metrics}
+Summary:
