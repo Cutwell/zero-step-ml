@@ -1,14 +1,5 @@
-<h1 align="center">
-  <img src="logo.png" style="width:280px">
-  <br/>
-  Zero Step ML
-</h1>
-
-<p align="center">
-   Fully automated machine learning using LLMs.
-</p>
-
-<br />
+# <img src="./zero-step-ml.png" style="width:30px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
+ Fully automated machine learning using LLMs.
 
 ## Install
 
