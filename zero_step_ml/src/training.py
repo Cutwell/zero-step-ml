@@ -44,12 +44,6 @@ def perform_regression(data, feature_names, target_name):
 
     return model, metrics
 
-# Example usage:
-# data = [[feature1_value, feature2_value, ..., target_value], ...]
-# feature_names = ['feature1', 'feature2', ...]
-# target_name = 'target'
-# model, metrics = perform_regression(data, feature_names, target_name)
-# print(metrics)
 
 def perform_classification(data, feature_names, target_name, classifier):
     """
@@ -92,11 +86,3 @@ def perform_classification(data, feature_names, target_name, classifier):
     }
 
     return model, metrics
-
-# Example usage:
-# data = [[feature1_value, feature2_value, ..., target_value], ...]
-# feature_names = ['feature1', 'feature2', ...]
-# target_name = 'target'
-# classifier = DecisionTreeClassifier  # You can replace this with the classifier of your choice
-# model, metrics = perform_classification(data, feature_names, target_name, classifier)
-# print(metrics)
