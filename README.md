@@ -1,4 +1,4 @@
-# <img src="./zero-step-ml.png" style="width:30px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
+# <img src="./zero-step-ml.png" style="width:128px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
  Fully automated machine learning using LLMs.
 
 ## Install
