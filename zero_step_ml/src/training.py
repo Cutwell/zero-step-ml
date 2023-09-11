@@ -1,140 +1,88 @@
-import argparse
-import os
-import json
 import pandas as pd
-from zero_step_ml.src.training import perform_classification, perform_regression
-from langchain.llms import OpenAI
-from langchain import PromptTemplate, LLMChain
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 
 
-with open(file=os.path.join(os.getcwd(), "zero_step_ml/src/prompts/analyse_schema.txt"), mode="r") as file:
-    ANALYSE_SCHEMA_PROMPT = PromptTemplate(template=file.read(), input_variables=["dataset_name", "schema"])
-
-with open(file=os.path.join(os.getcwd(), "zero_step_ml/src/prompts/analyse_ml_metrics.txt"), mode="r") as file:
-    ANALYSE_ML_METRICS_PROMPT = PromptTemplate(template=file.read(), input_variables=["task", "metrics"])
-
-
-def analyse_schema(dataset_name: str, schema: list[str]):
+def perform_regression(data, feature_names, target_name):
     """
-    Analyse a CSV (via dataset name and headers) to identify features and targets.
+    Perform linear regression on the given data.
 
-    Arguments:
-        dataset_name (str): filename of dataset.
-        schema (list[str]): list of headers for each column in dataset.
+    Parameters:
+    - data (array-like): The input data as a 2D array.
+    - feature_names (list): A list of feature names.
+    - target_name (str): The name of the target variable.
 
     Returns:
-        analysis (dict): dictionary containing "task" (ML task: regression/classification), "feature_names" (list of features), "target_name" (target column).
-
+    - model: Trained linear regression model.
+    - metrics (dict): Dictionary containing regression metrics.
     """
-    
-    llm = OpenAI(temperature=0)
-    llm_chain = LLMChain(prompt=ANALYSE_SCHEMA_PROMPT, llm=llm)
 
-    analysis_json = llm_chain.run(
-        dataset_name=dataset_name,
-        schema=schema
-    )
+    # Create a DataFrame from the input data
+    df = pd.DataFrame(data, columns=feature_names + [target_name])
 
-    analysis = json.loads(analysis_json)
+    # Separate input features and target variable
+    X = df[feature_names]
+    y = df[target_name]
 
-    return analysis
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Instantiate and train the linear regression model
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
+
+    # Calculate regression metrics
+    metrics = {
+        'MAE': mean_absolute_error(y_test, y_pred),
+        'MSE': mean_squared_error(y_test, y_pred),
+        'R2 Score': r2_score(y_test, y_pred)
+    }
+
+    return model, metrics
 
 
-def analyse_ml_metrics(task: str, metrics: dict):
+def perform_classification(data, feature_names, target_name, classifier):
     """
-    Summarise ML model performance metrics into natural language.
+    Perform classification on the given data using the specified classifier.
 
-    Arguments:
-        task (str): ML task (regression/classification).
-        metrics (dict): ML model metrics.
+    Parameters:
+    - data (array-like): The input data as a 2D array.
+    - feature_names (list): A list of feature names.
+    - target_name (str): The name of the target variable.
+    - classifier: The classifier to use (e.g., DecisionTreeClassifier, RandomForestClassifier, etc.).
 
     Returns:
-        summary (str): summarisation of metrics, in natural language.
-
+    - model: Trained classifier model.
+    - metrics (dict): Dictionary containing classification metrics.
     """
 
-    llm = OpenAI(temperature=0)
-    llm_chain = LLMChain(prompt=ANALYSE_ML_METRICS_PROMPT, llm=llm)
+    # Create a DataFrame from the input data
+    df = pd.DataFrame(data, columns=feature_names + [target_name])
 
-    summary = llm_chain.run(
-        task=task,
-        metrics=metrics
-    )
+    # Separate input features and target variable
+    X = df[feature_names]
+    y = df[target_name]
 
-    return summary
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-def cli():
-    """
-    Parse CLI arguments.
+    # Instantiate and train the classifier
+    model = classifier()
+    model.fit(X_train, y_train)
 
-    Arguments:
-        None
+    # Make predictions on the test data
+    y_pred = model.predict(X_test)
 
-    Returns:
-        None
-
-    """
-
-    parser = argparse.ArgumentParser(
-        description="Perform automated ML on a target dataset, using LLMs."
-    )
-    parser.add_argument("--target", type=str, help="Filepath to target CSV.")
-    args = parser.parse_args()
-
-    main(
-        args.target
-    )
-
-
-def main(target_csv: str):
-    """
-    Analyse an input dataset and perform fully automated machine learning classification / regression training.
-
-    Arguments:
-        target_csv (str): target CSV dataset (must contain headers).
-
-    Returns:
-        model (object): trained ML model (DecisionTreeClassifier / LinearRegression).
-        metrics (dict): model performance metrics.
-
-    """
-
-    df = pd.read_csv(target_csv)
-    df = df.dropna()
-
-    headers = df.columns.tolist()
-
-    analysis = analyse_schema(
-        dataset_name=target_csv,
-        schema=headers
-    )
-
-    print(f"Analysed dataset!\nML task: {analysis['task']}\nFeatures: {analysis['feature_names']}\nTarget: {analysis['target_name']}")
-
-    match analysis["task"]:
-        case "classification":
-            from sklearn.tree import DecisionTreeClassifier
-            classifier = DecisionTreeClassifier  # TODO: replace with LLM decision
-            model, metrics = perform_classification(
-                data=df,
-                feature_names=analysis["feature_names"],
-                target_name=analysis["target_name"],
-                classifier=classifier
-            )
-        case "regression":
-            model, metrics = perform_regression(
-                data=df,
-                feature_names=analysis["feature_names"],
-                target_name=analysis["target_name"]
-            )
-        case _:
-            raise Exception(f"LLM analysis error: {analysis['task']} is not a valid ML task.")  
-
-    summary = analyse_ml_metrics(
-        task=analysis["task"],
-        metrics=metrics
-    )
-
-    print(f"Trained model!\nModel class: {model}\nMetrics: {metrics}\nLLM Summary: {summary}")
+    # Calculate classification metrics
+    metrics = {
+        'Accuracy': accuracy_score(y_test, y_pred),
+        'Precision': precision_score(y_test, y_pred),
+        'Recall': recall_score(y_test, y_pred),
+        'F1 Score': f1_score(y_test, y_pred)
+    }
 
     return model, metrics

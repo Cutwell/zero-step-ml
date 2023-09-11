@@ -2,7 +2,7 @@ import argparse
 import os
 import json
 import pandas as pd
-from .training import perform_classification, perform_regression
+from zero_step_ml.src.training import perform_classification, perform_regression
 from langchain.llms import OpenAI
 from langchain import PromptTemplate, LLMChain
 
@@ -100,6 +100,8 @@ def main(target_csv: str):
     """
 
     df = pd.read_csv(target_csv)
+    df = df.dropna()
+
     headers = df.columns.tolist()
 
     analysis = analyse_schema(
