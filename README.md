@@ -23,6 +23,8 @@ make test       # Run unit tests to check installation
 1. Obtain your dataset (supported file types: CSV) (supported ML tasks: classification, regression).
 2. Run `poetry run zero_step_ml --target="my_dataset.csv"`
 
+NOTE: Use the `--interactive` flag to enable interactive mode, which allows the user to approve LLM feature/target analysis, or provide additional context to enable the LLM to select the correct features/targets/task.
+
 ## Testing
 
 Performance on popular datasets:
