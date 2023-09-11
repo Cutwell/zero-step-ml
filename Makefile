@@ -39,3 +39,11 @@ clean: ## Delete all Python and terragrunt cache files
 .PHONY: test
 test: ## run all unit tests locally
 	@poetry run python -m pytest -s .
+
+.PHONY: dev
+dev: ## run using test dataset
+	@poetry run zero_step_ml --target="zero_step_ml/tests/AutoInsurSweden.csv"
+
+.PHONY: dev-interactive
+dev-interactive: ## run in interactive mode using test dataset
+	@poetry run zero_step_ml --target="zero_step_ml/tests/AutoInsurSweden.csv" --interactive

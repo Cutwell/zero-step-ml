@@ -47,4 +47,5 @@ Output: {{
 Now your turn:
 Dataset name: {dataset_name}
 Schema: {schema}
+{optional_context}
 Output:
