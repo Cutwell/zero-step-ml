@@ -24,7 +24,7 @@ define install_dependencies
 		pip install poetry; \
 	fi
 	poetry config virtualenvs.in-project true
-	poetry install --sync --with api --with dev --with ui --with preprocess
+	poetry install --sync --with dev
 endef
 
 .PHONY: install
