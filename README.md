@@ -1,6 +1,10 @@
 # <img src="./zero-step-ml.png" style="width:128px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
  Fully automated machine learning using LLMs.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![PyTests](https://github.com/Cutwell/zero-step-ml/actions/workflows/pytest-with-poetry.yaml/badge.svg)
+![Pre-commit](https://github.com/Cutwell/zero-step-ml/actions/workflows/pre-commit.yaml/badge.svg)
+
 ## How it works
 
 1. LLM analyses the column headers and predicts A) ML task (classification/regression), B) feature columns, C) target column.
