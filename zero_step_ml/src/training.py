@@ -1,7 +1,15 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+)
 
 
 def perform_regression(data, feature_names, target_name):
@@ -26,7 +34,9 @@ def perform_regression(data, feature_names, target_name):
     y = df[target_name]
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     # Instantiate and train the linear regression model
     model = LinearRegression()
@@ -37,9 +47,9 @@ def perform_regression(data, feature_names, target_name):
 
     # Calculate regression metrics
     metrics = {
-        'MAE': mean_absolute_error(y_test, y_pred),
-        'MSE': mean_squared_error(y_test, y_pred),
-        'R2 Score': r2_score(y_test, y_pred)
+        "MAE": mean_absolute_error(y_test, y_pred),
+        "MSE": mean_squared_error(y_test, y_pred),
+        "R2 Score": r2_score(y_test, y_pred),
     }
 
     return model, metrics
@@ -68,7 +78,9 @@ def perform_classification(data, feature_names, target_name, classifier):
     y = df[target_name]
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     # Instantiate and train the classifier
     model = classifier()
@@ -79,10 +91,10 @@ def perform_classification(data, feature_names, target_name, classifier):
 
     # Calculate classification metrics
     metrics = {
-        'Accuracy': accuracy_score(y_test, y_pred),
-        'Precision': precision_score(y_test, y_pred),
-        'Recall': recall_score(y_test, y_pred),
-        'F1 Score': f1_score(y_test, y_pred)
+        "Accuracy": accuracy_score(y_test, y_pred),
+        "Precision": precision_score(y_test, y_pred),
+        "Recall": recall_score(y_test, y_pred),
+        "F1 Score": f1_score(y_test, y_pred),
     }
 
     return model, metrics

@@ -1,4 +1,4 @@
-# <img src="./zero-step-ml.png" style="width:128px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
+# <img src="https://raw.githubusercontent.com/Cutwell/zero-step-ml/main/zero-step-ml.png" style="width:128px;padding-right:20px;margin-bottom:-8px;">Zero Step ML
  Fully automated machine learning using LLMs.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
