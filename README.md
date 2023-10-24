@@ -11,6 +11,14 @@
 2. Data is preprocessed and trained according to identified task type.
 3. Model metrics are analysed and summarised in natural language.
 
+```mermaid
+flowchart TD
+    A[0. Upload dataset]
+    A --> B[1. Identify ML task, feature columns & target column]
+    B --> C[2. Preprocess data]
+    C --> D[3. Train model & analyse performance]
+```
+
 ## Install
 
 1. Clone this repository locally.
