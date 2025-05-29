@@ -13,10 +13,10 @@
 
 ```mermaid
 flowchart TD
-    A[0. Upload dataset]
-    A --> B[1. Identify ML task, feature columns & target column]
-    B --> C[2. Preprocess data]
-    C --> D[3. Train model & analyse performance]
+    A[0: Upload dataset]
+    A --> B[1: Identify ML task, feature columns & target column]
+    B --> C[2: Preprocess data]
+    C --> D[3: Train model & analyse performance]
 ```
 
 ## Install
